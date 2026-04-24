@@ -2,10 +2,11 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/werener/fractal-flame/internal/infrastructure/cli"
 )
 
 func main() {
@@ -16,11 +17,5 @@ func main() {
 	)
 	defer stop()
 
-	Run(ctx, os.Args)
-}
-
-func Run(ctx context.Context, args []string) {
-	for _, arg := range args {
-		fmt.Println(arg)
-	}
+	cli.Run(ctx, os.Args)
 }
