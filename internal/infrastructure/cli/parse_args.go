@@ -44,9 +44,9 @@ func parseAffine(aps []float64) domain.AffineParams {
 	}
 }
 
-func parseFunctions(funcStr []string) ([]domain.Function, error) {
+func parseFunctions(funcStrs []string) ([]domain.Function, error) {
 	functions := []domain.Function{}
-	for _, funcStr := range funcStr {
+	for _, funcStr := range funcStrs {
 		function, err := parseFunction(funcStr)
 		if err != nil {
 			return []domain.Function{}, err
@@ -60,7 +60,7 @@ func parseFunctions(funcStr []string) ([]domain.Function, error) {
 func parseFunction(funcStr string) (domain.Function, error) {
 	transformationStr, weightStr, ok := strings.Cut(funcStr, ":")
 	if !ok {
-		return domain.Function{}, fmt.Errorf("wrong function format")
+		return domain.Function{}, fmt.Errorf("%s: wrong function format - no ':'", funcStr)
 	}
 	transformation, ok := domain.GetTransformation(domain.TransformationType(transformationStr))
 	if !ok {
