@@ -120,6 +120,6 @@ func execMainCommand(ctx context.Context, command *cli.Command) error {
 	return nil
 }
 
-func run(_ context.Context, cfg domain.Configuration) error {
+func run(_ context.Context, cfg *domain.Configuration) error {
 	return nil
 }
