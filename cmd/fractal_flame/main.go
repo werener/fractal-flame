@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log"
 	"os"
 	"os/signal"
 	"syscall"
@@ -17,5 +18,7 @@ func main() {
 	)
 	defer stop()
 
-	cli.Run(ctx, os.Args)
+	err := cli.Run(ctx, os.Args)
+
+	log.Println(err)
 }

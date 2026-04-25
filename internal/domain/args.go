@@ -1,6 +1,6 @@
 package domain
 
-type Args struct {
+type Configuration struct {
 	Size           Size
 	Seed           int64
 	IterationCount int

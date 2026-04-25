@@ -2,13 +2,15 @@ package cli
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/urfave/cli/v3"
 	"github.com/werener/fractal-flame/internal/domain"
 )
 
+// Run defines a main command and then runs it
 func Run(ctx context.Context, args []string) error {
-	app := &cli.Command{
+	mainCommand := &cli.Command{
 		Name:     "fractal-flame",
 		Usage:    "Generates fractal flames",
 		HideHelp: true,
@@ -95,14 +97,29 @@ func Run(ctx context.Context, args []string) error {
 				Validator: validateSymmetryLevel,
 			},
 		},
-		Action: executeCommand,
+		Action: execMainCommand,
 	}
 
-	if err := app.Run(ctx, args); err != nil {
-
+	if err := mainCommand.Run(ctx, args); err != nil {
+		return fmt.Errorf("Application failed with %s", err)
 	}
 	return nil
 }
-func executeCommand(_ context.Context, c *cli.Command) error {
+
+// execMainCommand starts the main application service
+func execMainCommand(ctx context.Context, command *cli.Command) error {
+	cfg, err := createConfig(command)
+	if err != nil {
+		return fmt.Errorf("parse error '%s'", err)
+	}
+
+	err = run(ctx, cfg)
+	if err != nil {
+		return fmt.Errorf("runtime error '%s'", err)
+	}
+	return nil
+}
+
+func run(_ context.Context, cfg domain.Configuration) error {
 	return nil
 }
