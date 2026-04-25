@@ -20,5 +20,7 @@ func main() {
 
 	err := cli.Run(ctx, os.Args)
 
-	log.Println(err)
+	if err != nil {
+		log.Println(err)
+	}
 }
