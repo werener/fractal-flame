@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/urfave/cli/v3"
+	"github.com/werener/fractal-flame/internal/domain"
 )
 
 func Run(ctx context.Context, args []string) error {
@@ -19,78 +20,78 @@ func Run(ctx context.Context, args []string) error {
 			&cli.IntFlag{
 				Name:      "width",
 				Aliases:   []string{"w"},
-				Value:     1920,
-				Usage:     "Width of the final image",
+				Value:     domain.WidthDefault,
+				Usage:     "Width of the produced image",
 				Validator: validateDimension,
 			},
 			&cli.IntFlag{
 				Name:      "height",
 				Aliases:   []string{"h"},
-				Value:     1080,
-				Usage:     "Height of the final image",
+				Value:     domain.HeightDefault,
+				Usage:     "Height of the produced image",
 				Validator: validateDimension,
 			},
-			&cli.Float64Flag{
+			&cli.Int64Flag{
 				Name:  "seed",
-				Value: 5.1234,
-				Usage: "Initial value for the random generator",
+				Value: domain.SeedDefault,
+				Usage: "Seed value for the random generation",
 			},
 			&cli.IntFlag{
 				Name:      "iteration-count",
 				Aliases:   []string{"i"},
-				Value:     2500,
-				Usage:     "Number of generation iterations",
+				Value:     domain.IterationCountDefault,
+				Usage:     "Number of iterations during image generation",
 				Validator: validateIterationCount,
 			},
 			&cli.StringFlag{
 				Name:      "output-path",
 				Aliases:   []string{"o"},
-				Value:     "result.png",
-				Usage:     "Relative path to the PNG output file",
+				Value:     domain.OutputPathDefault,
+				Usage:     "Path to the PNG output file",
 				Validator: validateOutput,
 			},
 			&cli.IntFlag{
 				Name:      "threads",
 				Aliases:   []string{"t"},
-				Value:     1,
-				Usage:     "Number of threads to use",
+				Value:     domain.ThreadsDefault,
+				Usage:     "Number of threads to use during image generation",
 				Validator: validateThreads,
 			},
 			&cli.Float64SliceFlag{
 				Name:      "affine-params",
 				Aliases:   []string{"ap"},
-				Value:     []float64{0.9, 0.7, 0, -0.15, -1.1, 0},
-				Usage:     "Affine transform params <a>,<b>,<c>,<d>,<e>,<f>",
+				Value:     domain.AffineParamsDefault,
+				Usage:     "Parameters of the affine transform <a1>,<b1>,<c1>,<d1>,<e1>,<f1>/.../<aN>,<bN>,<cN>,<dN>,<eN>,<fN>",
 				Validator: validateAffineParams,
 			},
 			&cli.StringSliceFlag{
 				Name:      "functions",
 				Aliases:   []string{"f"},
-				Value:     []string{"swirl:1.0"},
-				Usage:     "Transform functions: <func>:<weight>,...",
+				Value:     domain.FunctionStringsDefault,
+				Usage:     "Transform functions: <func>:<weight>,<func>:<weight>,...",
 				Validator: validateFunctions,
 			},
 			&cli.StringFlag{
 				Name:      "config",
-				Usage:     "Relative path to json config file",
+				Usage:     "Path to json config file",
 				Validator: validateConfig,
 			},
 			&cli.BoolFlag{
 				Name:    "gamma-correction",
 				Aliases: []string{"g"},
-				Usage:   "Enable gamma correction",
+				Usage:   "Enables gamma correction",
 			},
 			&cli.Float64Flag{
 				Name:      "gamma",
-				Value:     2.2,
-				Usage:     "Gamma value for bright correction of final image",
+				Value:     domain.GammaValueDefault,
+				Usage:     "Gamma value for brightness correction of final image",
 				Validator: validateGamma,
 			},
 			&cli.IntFlag{
 				Name:      "symmetry-level",
 				Aliases:   []string{"s"},
-				Value:     1,
-				Usage:     "Amount symmetry parts in final image",
+				Value:     domain.SymmetryLevelDefault,
+				Usage:     "Amount of symmetry parts in final image",
 				Validator: validateSymmetryLevel,
 			},
 		},
