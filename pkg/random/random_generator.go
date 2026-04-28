@@ -6,11 +6,14 @@ type RandomGenerator struct {
 	seed int64
 }
 
-func NewGenerator(s int64) *RandomGenerator {
+// NewGenerator creates a new random generator with the given seed.
+func NewGenerator() *RandomGenerator {
 	return &RandomGenerator{}
 }
 
-func (*RandomGenerator) GetNumberRandomizer(seed int64) Random {
+// GetRandomizer returns a new randomizer instance with a set seed.
+// It canbe used to generate random numbers.
+func (*RandomGenerator) GetRandomizer(seed int64) Random {
 	return &Randomizer{
 		gen: rand.New(rand.NewSource(seed)),
 	}
