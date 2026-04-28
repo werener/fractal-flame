@@ -8,7 +8,7 @@ import (
 	"github.com/werener/fractal-flame/internal/domain"
 )
 
-// Run defines a main command and then runs it
+// Run defines a main command and then runs it.
 func Run(ctx context.Context, args []string) error {
 	mainCommand := &cli.Command{
 		Name:     "fractal-flame",
@@ -106,7 +106,7 @@ func Run(ctx context.Context, args []string) error {
 	return nil
 }
 
-// execMainCommand starts the main application service
+// execMainCommand starts the main application service.
 func execMainCommand(ctx context.Context, command *cli.Command) error {
 	cfg, err := createConfig(command)
 	if err != nil {

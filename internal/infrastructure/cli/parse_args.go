@@ -33,6 +33,7 @@ func createConfig(c *cli.Command) (*domain.Configuration, error) {
 	return args, nil
 }
 
+// parseAffine converts a slice of float64 values into an AffineParams struct.
 func parseAffine(aps []float64) domain.AffineParams {
 	return domain.AffineParams{
 		A: aps[0],
@@ -44,6 +45,8 @@ func parseAffine(aps []float64) domain.AffineParams {
 	}
 }
 
+// parseFunctions converts a slice of function names into
+// a slice of transformation functions structs.
 func parseFunctions(funcStrs []string) ([]domain.Function, error) {
 	functions := []domain.Function{}
 	for _, funcStr := range funcStrs {
@@ -57,6 +60,8 @@ func parseFunctions(funcStrs []string) ([]domain.Function, error) {
 	return functions, nil
 }
 
+// parseFunction converts a function name into a transformation function struct.
+// It also raises an error if the function is not supported or the weight is invalid.
 func parseFunction(funcStr string) (domain.Function, error) {
 	transformationStr, weightStr, ok := strings.Cut(funcStr, ":")
 	if !ok {
