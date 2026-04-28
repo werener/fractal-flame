@@ -26,3 +26,10 @@ func (r Rectangle) RandomPoint(rnd random.Random) Point {
 	y := rnd.Float64()*r.Height + r.MinPoint.Y
 	return NewPoint(x, y)
 }
+
+// Contains checks if the given point is within the bounds of the rectangle.
+func (r Rectangle) Contains(point Point) bool {
+	x, y := point.X, point.Y
+	return x >= r.MinPoint.X && x <= r.MinPoint.X+r.Width &&
+		y >= r.MinPoint.Y && y <= r.MinPoint.Y+r.Height
+}
