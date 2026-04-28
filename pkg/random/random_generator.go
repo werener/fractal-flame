@@ -12,7 +12,7 @@ func NewGenerator() *RandomGenerator {
 }
 
 // GetRandomizer returns a new randomizer instance with a set seed.
-// It canbe used to generate random numbers.
+// It can be used to generate random numbers.
 func (*RandomGenerator) GetRandomizer(seed int64) Random {
 	return &Randomizer{
 		gen: rand.New(rand.NewSource(seed)),
