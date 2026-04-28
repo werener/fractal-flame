@@ -3,6 +3,8 @@ package cli
 import (
 	"errors"
 	"fmt"
+	"os"
+	"path/filepath"
 )
 
 var (
@@ -12,6 +14,7 @@ var (
 	errAffineParams       error = errors.New("wrong amount of affine params")
 	errWrongGamma         error = errors.New("gamma cannot be zero")
 	errWrongSymmetryLevel error = errors.New("symmetry level has to be higher than zero")
+	errWrongOutput        error = errors.New("output path has to be a writable file with .png extension")
 )
 
 func validateDimension(d int) error {
@@ -28,8 +31,27 @@ func validateIterationCount(i int) error {
 	return nil
 }
 
-// TODO
-func validateOutput(_ string) error {
+func validateOutput(outPath string) error {
+	ext := filepath.Ext(outPath)
+	if ext != ".png" {
+		return fmt.Errorf("%w: extension isn't supported: %s", errWrongOutput, ext)
+	}
+
+	dir := filepath.Dir(outPath)
+	tmpFile, err := os.CreateTemp(dir, ".tmp")
+
+	if err != nil {
+		return fmt.Errorf("%w: cannot write file to directory %s: %w", errWrongOutput, dir, err)
+	}
+	err = tmpFile.Close()
+	if err != nil {
+		return err
+	}
+	err = os.Remove(tmpFile.Name())
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
