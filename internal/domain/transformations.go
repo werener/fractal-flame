@@ -9,6 +9,7 @@ const (
 	Swirl      TransformationType = "swirl"
 	Horseshoe  TransformationType = "horseshoe"
 	Spherical  TransformationType = "spherical"
+	Polar      TransformationType = "polar"
 	Heart      TransformationType = "heart"
 	Disk       TransformationType = "disk"
 	Cosine     TransformationType = "cosine"
@@ -19,6 +20,7 @@ var AvailableTransformations = map[TransformationType]Transformation{
 	Swirl:      swirl,
 	Horseshoe:  horseshoe,
 	Spherical:  spherical,
+	Polar:      polar,
 	Heart:      heart,
 	Disk:       disk,
 	Cosine:     cosine,
