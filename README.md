@@ -130,23 +130,13 @@ $$
 $$
 \begin{aligned} 
 & F(x, y) = (x\sin(r^2) - y\cos(r^2) ,\,  x\cos(r^2) + y\sin(r^2)) & \it{Swirl} \\
-
 & F(x, y) = \frac{1}{r} \cdot ((x - y)(x + y) ,\,  2xy)  & \it{Horseshoe} \\
-
 & F(x, y) = \frac{1}{r^2} \cdot (x ,\, y)  & \it{Spherical} \\
-
 & F(x, y) = (\frac{\theta}{\pi} ,\,  r - 1)  & \it{Polar} \\
-
 & F(x, y) = r \cdot(\sin{(r\theta)} ,\, \cos{(r\theta)})  & \it{Heart} \\
-
 & F(x, y) = \frac{\theta}{\pi} \cdot (\sin{(\pi r)} ,\, \cos{(\pi r)})  & \it{Disk} \\
-
 & F(x, y) = (\cos{(\pi x)} \cosh{y} ,\,  \sin{(\pi x)} \sinh{y})  & \it{Cosine} \\
-
 & F(x, y) = (\sin{x} ,\,  \sin{y})  & \it{Sinusoidal} \\
-
-
-& F(x, y) = (x, \; y)  & \it{TEMPLATE} \\
 \end{aligned}
 $$
 
