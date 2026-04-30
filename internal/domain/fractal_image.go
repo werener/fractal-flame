@@ -13,10 +13,10 @@ type FractalImage struct {
 	Pixels []Pixel
 }
 
-func NewFractalImage(width, height int) *FractalImage {
+func NewFractalImage(res Resolution) *FractalImage {
 	return &FractalImage{
-		Width: width, Height: height,
-		Pixels: make([]Pixel, width*height),
+		Width: res.Width, Height: res.Height,
+		Pixels: make([]Pixel, res.Width*res.Height),
 	}
 }
 
@@ -39,10 +39,10 @@ func (fi *FractalImage) contains(x, y int) bool {
 func (fi *FractalImage) Generate(
 	rect Rectangle,
 	cfg *Configuration,
-	color Color,
 	rnd random.Random,
 ) {
 	point := rect.RandomPoint(rnd)
+	color := RandomColor(rnd)
 	for i := range Shift + cfg.IterationCount {
 		point.affineTransform(cfg.AffineParams)
 
