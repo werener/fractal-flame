@@ -8,12 +8,15 @@ import (
 	"github.com/werener/fractal-flame/pkg/png"
 )
 
-func SaveFractal(fi *domain.FractalImage, path string) error {
+type FractalSaver struct {
+}
+
+func (FractalSaver) Save(fi domain.FractalImage, path string) error {
 	img := fractalToPng(fi)
 	return png.Save(img, path)
 }
 
-func fractalToPng(fractal *domain.FractalImage) image.Image {
+func fractalToPng(fractal domain.FractalImage) image.Image {
 	img := image.NewRGBA(image.Rect(0, 0, fractal.Width, fractal.Height))
 
 	for y := range fractal.Height {

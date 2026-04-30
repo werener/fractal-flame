@@ -5,20 +5,24 @@ import (
 	"fmt"
 
 	"github.com/urfave/cli/v3"
-	"github.com/werener/fractal-flame/internal/application/handlers"
 	"github.com/werener/fractal-flame/internal/domain"
-	"github.com/werener/fractal-flame/pkg/random"
 )
 
-const (
-	minX = -1.0
-	minY = -1.0
-	maxX = 1.0
-	maxY = 1.0
-)
+type FractalService interface {
+	Generate(cfg *domain.Configuration)
+	Save(path string) error
+}
+
+type App struct {
+	FlameService FractalService
+}
+
+func NewApp(service FractalService) App {
+	return App{FlameService: service}
+}
 
 // Run defines a main command and then runs it.
-func Run(ctx context.Context, args []string) error {
+func (a App) Run(ctx context.Context, args []string) error {
 	mainCommand := &cli.Command{
 		Name:     "fractal-flame",
 		Usage:    "Generates fractal flames",
@@ -106,7 +110,7 @@ func Run(ctx context.Context, args []string) error {
 				Validator: validateSymmetryLevel,
 			},
 		},
-		Action: execMainCommand,
+		Action: a.execMainCommand,
 	}
 
 	if err := mainCommand.Run(ctx, args); err != nil {
@@ -116,27 +120,22 @@ func Run(ctx context.Context, args []string) error {
 }
 
 // execMainCommand starts the main application service.
-func execMainCommand(ctx context.Context, command *cli.Command) error {
+func (a App) execMainCommand(ctx context.Context, command *cli.Command) error {
 	cfg, err := createConfig(command)
 	if err != nil {
 		return fmt.Errorf("parse error '%s'", err)
 	}
 
-	err = run(ctx, cfg)
+	err = a.run(ctx, cfg)
 	if err != nil {
 		return fmt.Errorf("runtime error '%s'", err)
 	}
 	return nil
 }
 
-func run(_ context.Context, cfg *domain.Configuration) error {
-	rect := domain.NewRectangle(minX, minY, maxX-minX, maxY-minY)
-	gen := random.NewGenerator()
-	rnd := gen.GetRandomizer(cfg.Seed)
+func (a App) run(_ context.Context, cfg *domain.Configuration) error {
+	a.FlameService.Generate(cfg)
 
-	fi := domain.NewFractalImage(cfg.Resolution)
-	fi.Generate(rect, cfg, rnd)
-
-	handlers.SaveFractal(fi, cfg.OutputPath)
+	a.FlameService.Save(cfg.OutputPath)
 	return nil
 }

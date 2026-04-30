@@ -7,7 +7,10 @@ import (
 	"os/signal"
 	"syscall"
 
+	"github.com/werener/fractal-flame/internal/application/handlers"
+	"github.com/werener/fractal-flame/internal/application/usecase"
 	"github.com/werener/fractal-flame/internal/infrastructure/cli"
+	"github.com/werener/fractal-flame/pkg/random"
 )
 
 func main() {
@@ -18,8 +21,15 @@ func main() {
 	)
 	defer stop()
 
-	err := cli.Run(ctx, os.Args)
+	saver := handlers.FractalSaver{}
+	generator := handlers.FractalGenerator{}
+	randomizer := random.NewGenerator()
 
+	fractalService := usecase.NewFractalService(saver, generator, *randomizer)
+
+	app := cli.NewApp(fractalService)
+
+	err := app.Run(ctx, os.Args)
 	if err != nil {
 		log.Println(err)
 	}
