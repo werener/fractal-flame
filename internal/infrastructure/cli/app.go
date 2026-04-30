@@ -6,6 +6,14 @@ import (
 
 	"github.com/urfave/cli/v3"
 	"github.com/werener/fractal-flame/internal/domain"
+	"github.com/werener/fractal-flame/pkg/random"
+)
+
+const (
+	minX = -1.0
+	minY = -1.0
+	maxX = 1.0
+	maxY = 1.0
 )
 
 // Run defines a main command and then runs it.
@@ -121,5 +129,12 @@ func execMainCommand(ctx context.Context, command *cli.Command) error {
 }
 
 func run(_ context.Context, cfg *domain.Configuration) error {
+	rect := domain.NewRectangle(minX, minY, maxX-minX, maxY-minY)
+	gen := random.NewGenerator()
+	rnd := gen.GetRandomizer(cfg.Seed)
+
+	fi := domain.NewFractalImage(cfg.Resolution)
+	fi.Generate(rect, cfg, rnd)
+
 	return nil
 }

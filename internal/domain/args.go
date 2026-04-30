@@ -1,7 +1,7 @@
 package domain
 
 type Configuration struct {
-	Resolution     Size
+	Resolution     Resolution
 	Seed           int64
 	IterationCount int
 	OutputPath     string
@@ -10,7 +10,7 @@ type Configuration struct {
 	Functions      []Function
 }
 
-type Size struct {
+type Resolution struct {
 	Width  int
 	Height int
 }
