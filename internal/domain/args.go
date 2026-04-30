@@ -31,15 +31,19 @@ type Function struct {
 }
 
 var (
-	WidthDefault           int       = 1920
-	HeightDefault          int       = 1080
-	SeedDefault            int64     = 5
-	IterationCountDefault  int       = 1500
-	OutputPathDefault      string    = "result.png"
-	ThreadsDefault         int       = 1
-	AffineParamsDefault    []float64 = []float64{0.9, 0.7, 0, -0.15, -1.1, 0}
-	FunctionStringsDefault []string  = []string{"swirl:1.0"}
-	GammaValueDefault      float64   = 2.2
-	SymmetryLevelDefault   int       = 1
-	PointIterationsDefault int       = 70
+	WidthDefault          int       = 1920
+	HeightDefault         int       = 1080
+	SeedDefault           int64     = 1
+	IterationCountDefault int       = 25000
+	OutputPathDefault     string    = "result.png"
+	ThreadsDefault        int       = 1
+	AffineParamsDefault   []float64 = []float64{
+		-0.6, -0.3, 0.2, -0.15, -0.7, 0.5,
+		-0.3, -0.5, -0.2, 0.5, 0.7, 0.2,
+		0.2, -0.35, 0.15, .25, -0.7, 0.8,
+	}
+	FunctionStringsDefault []string = []string{"swirl:1.0", "heart:1.0"}
+	GammaValueDefault      float64  = 2.2
+	SymmetryLevelDefault   int      = 1
+	PointIterationsDefault int      = 70
 )
