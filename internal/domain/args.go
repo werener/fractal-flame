@@ -1,7 +1,7 @@
 package domain
 
 type Configuration struct {
-	Size           Size
+	Resolution     Size
 	Seed           int64
 	IterationCount int
 	OutputPath     string

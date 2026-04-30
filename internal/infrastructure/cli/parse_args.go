@@ -18,7 +18,7 @@ func createConfig(c *cli.Command) (*domain.Configuration, error) {
 	}
 
 	args := &domain.Configuration{
-		Size: domain.Size{
+		Resolution: domain.Size{
 			Width:  c.Int("width"),
 			Height: c.Int("height"),
 		},
