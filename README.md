@@ -1,7 +1,6 @@
 # Fractal flame
 
-Options
-------------------------------------
+## Options
 - `-w` / `--width` - **int**
 
   *Width of the final image resolution*
@@ -79,8 +78,8 @@ Options
   *Path to the file, containing configuration*
 
   **Optional argument**
-------------------------------------
 
+## Config file
 Input parameters can be provided in a `.json` file:
 ```json
 {
@@ -112,11 +111,45 @@ Input parameters can be provided in a `.json` file:
   }
 }
 ```
+**Parameter priority:**
+* Console args
+* JSON-config
+* Default values
 
-**Приоритет параметров:**
-* Консольный ввод
-* JSON-файл
-* Параметры по дефолту
+
+
+## Supported non-linear transformations
+
+$$
+\begin{aligned} 
+& r = \sqrt{x^2 + y^2} &  \\
+& \theta = \arctan{\frac{y}{x}} &
+\end{aligned}
+$$
+
+$$
+\begin{aligned} 
+& F(x, y) = (x\sin(r^2) - y\cos(r^2) ,\,  x\cos(r^2) + y\sin(r^2)) & \it{Swirl} \\
+
+& F(x, y) = \frac{1}{r} \cdot ((x - y)(x + y) ,\,  2xy)  & \it{Horseshoe} \\
+
+& F(x, y) = \frac{1}{r^2} \cdot (x ,\, y)  & \it{Spherical} \\
+
+& F(x, y) = (\frac{\theta}{\pi} ,\,  r - 1)  & \it{Polar} \\
+
+& F(x, y) = r \cdot(\sin{(r\theta)} ,\, \cos{(r\theta)})  & \it{Heart} \\
+
+& F(x, y) = \frac{\theta}{\pi} \cdot (\sin{(\pi r)} ,\, \cos{(\pi r)})  & \it{Disk} \\
+
+& F(x, y) = (\cos{(\pi x)} \cosh{y} ,\,  \sin{(\pi x)} \sinh{y})  & \it{Cosine} \\
+
+& F(x, y) = (\sin{x} ,\,  \sin{y})  & \it{Sinusoidal} \\
+
+
+& F(x, y) = (x, \; y)  & \it{TEMPLATE} \\
+\end{aligned}
+$$
+
 
 ## Доп задания
 
