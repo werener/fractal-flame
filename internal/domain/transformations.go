@@ -70,11 +70,11 @@ func swirl(p Point) Point {
 func horseshoe(p Point) Point {
 	x, y := p.X, p.Y
 
-	d := math.Hypot(x, y)
-	if d == 0 {
+	r := math.Hypot(x, y)
+	if r == 0 {
 		return NewPoint(0, 0)
 	}
-	return NewPoint((x-y)*(x+y)/d, 2*x*y/d)
+	return NewPoint((x-y)*(x+y)/r, 2*x*y/r)
 }
 
 func spherical(p Point) Point {
@@ -99,10 +99,10 @@ func polar(p Point) Point {
 func heart(p Point) Point {
 	x, y := p.X, p.Y
 
-	d := math.Hypot(x, y)
-	atan := math.Atan2(y, x)
-	newX := d * math.Sin(d*atan)
-	newY := -d * math.Cos(d*atan)
+	r := math.Hypot(x, y)
+	theta := math.Atan2(y, x)
+	newX := r * math.Sin(r*theta)
+	newY := -r * math.Cos(r*theta)
 
 	return NewPoint(newX, newY)
 }
@@ -110,18 +110,18 @@ func heart(p Point) Point {
 func disk(p Point) Point {
 	x, y := p.X, p.Y
 
-	thetaD := math.Pi * math.Hypot(x, y)
+	piR := math.Pi * math.Hypot(x, y)
 	atan := 1 / math.Pi * math.Atan2(y, x)
 
-	return NewPoint(atan*math.Sin(thetaD), atan*math.Cos(thetaD))
+	return NewPoint(atan*math.Sin(piR), atan*math.Cos(piR))
 }
 
 func cosine(p Point) Point {
 	x, y := p.X, p.Y
 
-	theta := math.Pi * x
-	newX := math.Cos(theta) * math.Cosh(y)
-	newY := -math.Sin(theta) * math.Sinh(y)
+	phi := math.Pi * x
+	newX := math.Cos(phi) * math.Cosh(y)
+	newY := -math.Sin(phi) * math.Sinh(y)
 
 	return NewPoint(newX, newY)
 }
