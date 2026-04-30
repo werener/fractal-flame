@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/urfave/cli/v3"
+	"github.com/werener/fractal-flame/internal/application/handlers"
 	"github.com/werener/fractal-flame/internal/domain"
 	"github.com/werener/fractal-flame/pkg/random"
 )
@@ -136,5 +137,6 @@ func run(_ context.Context, cfg *domain.Configuration) error {
 	fi := domain.NewFractalImage(cfg.Resolution)
 	fi.Generate(rect, cfg, rnd)
 
+	handlers.SaveFractal(fi, cfg.OutputPath)
 	return nil
 }
