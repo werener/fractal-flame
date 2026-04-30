@@ -80,5 +80,5 @@ func parseFunction(funcStr string) (domain.Function, error) {
 		return domain.Function{}, fmt.Errorf("%s: weight must be positive number", weightStr)
 	}
 
-	return domain.Function{Function: transformation, Weight: weight}, nil
+	return domain.Function{Transformation: transformation, Weight: weight}, nil
 }

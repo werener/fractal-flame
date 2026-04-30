@@ -25,8 +25,8 @@ type AffineParams struct {
 }
 
 type Function struct {
-	Function Transformation
-	Weight   float64
+	Transformation Transformation
+	Weight         float64
 }
 
 var (
