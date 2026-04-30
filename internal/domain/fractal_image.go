@@ -3,6 +3,7 @@ package domain
 import "github.com/werener/fractal-flame/pkg/random"
 
 const Shift = 20 // Amount of iterations to determine the startng point
+const ItersPerPoint = 100
 
 // FractalImage represents an image of a fractal.
 //
@@ -41,18 +42,21 @@ func (fi *FractalImage) Generate(
 	cfg *Configuration,
 	rnd random.Random,
 ) {
-	point := rect.RandomPoint(rnd)
 	color := RandomColor(rnd)
-	for i := range Shift + cfg.IterationCount {
-		point.affineTransform(cfg.AffineParams)
+	for range cfg.IterationCount {
+		point := rect.RandomPoint(rnd)
 
-		transformation := GetRandomTransformation(rnd, cfg.Functions)
-		point = transformation(point)
+		for i := range Shift + ItersPerPoint {
+			point.affineTransform(cfg.AffineParams)
 
-		if i >= Shift {
-			if rect.Contains(point) {
-				if pixel, ok := point.project(rect, fi); ok {
-					pixel.ColorPixel(color)
+			transformation := GetRandomTransformation(rnd, cfg.Functions)
+			point = transformation(point)
+
+			if i >= Shift {
+				if rect.Contains(point) {
+					if pixel, ok := point.project(rect, fi); ok {
+						pixel.ColorPixel(color)
+					}
 				}
 			}
 		}
