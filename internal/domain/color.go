@@ -18,3 +18,15 @@ func RandomColor(rnd random.Random) Color {
 		uint32(rnd.Intn(255)),
 	)
 }
+
+func RandomColors(n int, rnd random.Random) []Color {
+	colors := make([]Color, n)
+	for i := range n {
+		colors[i] = NewColor(
+			uint32(rnd.Intn(255)),
+			uint32(rnd.Intn(255)),
+			uint32(rnd.Intn(255)),
+		)
+	}
+	return colors
+}
