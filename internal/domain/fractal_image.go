@@ -44,7 +44,7 @@ func (fi *FractalImage) Generate(
 	point := rect.RandomPoint(rnd)
 	color := RandomColor(rnd)
 	for i := range Shift + cfg.IterationCount {
-		point = point.affineTransform(cfg.AffineParams)
+		point.affineTransform(cfg.AffineParams)
 
 		transformation := GetRandomTransformation(rnd, cfg.Functions)
 		point = transformation(point)
