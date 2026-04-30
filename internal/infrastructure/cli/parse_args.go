@@ -35,15 +35,20 @@ func createConfig(c *cli.Command) (*domain.Configuration, error) {
 }
 
 // parseAffine converts a slice of float64 values into an AffineParams struct.
-func parseAffine(aps []float64) domain.AffineParams {
-	return domain.AffineParams{
-		A: aps[0],
-		B: aps[1],
-		C: aps[2],
-		D: aps[3],
-		E: aps[4],
-		F: aps[5],
+func parseAffine(aps []float64) []domain.AffineParams {
+	apAmount := len(aps) / 6
+	affineParams := make([]domain.AffineParams, apAmount)
+	for i := range apAmount {
+		affineParams[i] = domain.AffineParams{
+			A: aps[6*i+0],
+			B: aps[6*i+1],
+			C: aps[6*i+2],
+			D: aps[6*i+3],
+			E: aps[6*i+4],
+			F: aps[6*i+5],
+		}
 	}
+	return affineParams
 }
 
 // parseFunctions converts a slice of function names into

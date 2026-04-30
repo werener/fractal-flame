@@ -7,7 +7,7 @@ type Configuration struct {
 	PointIterations int
 	OutputPath      string
 	Threads         int
-	AffineParams    AffineParams
+	AffineParams    []AffineParams
 	Functions       []Function
 }
 
