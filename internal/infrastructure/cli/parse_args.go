@@ -22,12 +22,13 @@ func createConfig(c *cli.Command) (*domain.Configuration, error) {
 			Width:  c.Int("width"),
 			Height: c.Int("height"),
 		},
-		Seed:           c.Int64("seed"),
-		IterationCount: c.Int("iteration-count"),
-		OutputPath:     c.String("output-path"),
-		Threads:        c.Int("threads"),
-		AffineParams:   parseAffine(c.Float64Slice("affine-params")),
-		Functions:      funcs,
+		Seed:            c.Int64("seed"),
+		IterationCount:  c.Int("iteration-count"),
+		PointIterations: c.Int("point-iterations"),
+		OutputPath:      c.String("output-path"),
+		Threads:         c.Int("threads"),
+		AffineParams:    parseAffine(c.Float64Slice("affine-params")),
+		Functions:       funcs,
 	}
 
 	return args, nil

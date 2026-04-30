@@ -31,6 +31,13 @@ func validateIterationCount(i int) error {
 	return nil
 }
 
+func validatePointIterations(i int) error {
+	if i < 1 {
+		return errIterationCount
+	}
+	return nil
+}
+
 func validateOutput(outPath string) error {
 	ext := filepath.Ext(outPath)
 	if ext != ".png" {

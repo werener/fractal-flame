@@ -58,6 +58,12 @@ func (a App) Run(ctx context.Context, args []string) error {
 				Usage:     "Number of iterations during image generation",
 				Validator: validateIterationCount,
 			},
+			&cli.IntFlag{
+				Name:      "point-iterations",
+				Value:     domain.PointIterationsDefault,
+				Usage:     "Number of iterations per one point during image generations",
+				Validator: validatePointIterations,
+			},
 			&cli.StringFlag{
 				Name:      "output-path",
 				Aliases:   []string{"o"},

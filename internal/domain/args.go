@@ -1,13 +1,14 @@
 package domain
 
 type Configuration struct {
-	Resolution     Resolution
-	Seed           int64
-	IterationCount int
-	OutputPath     string
-	Threads        int
-	AffineParams   AffineParams
-	Functions      []Function
+	Resolution      Resolution
+	Seed            int64
+	IterationCount  int
+	PointIterations int
+	OutputPath      string
+	Threads         int
+	AffineParams    AffineParams
+	Functions       []Function
 }
 
 type Resolution struct {
@@ -40,4 +41,5 @@ var (
 	FunctionStringsDefault []string  = []string{"swirl:1.0"}
 	GammaValueDefault      float64   = 2.2
 	SymmetryLevelDefault   int       = 1
+	PointIterationsDefault int       = 70
 )
