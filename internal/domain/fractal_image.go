@@ -4,7 +4,7 @@ import "github.com/werener/fractal-flame/pkg/random"
 
 const Shift = 20 // Amount of iterations to determine the startng point
 
-// FractalImage represents a fractal image.
+// FractalImage represents an image of a fractal.
 //
 // It has resolution (Width x Height) and contains a flat slice of pixels.
 type FractalImage struct {
