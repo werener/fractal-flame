@@ -1,6 +1,10 @@
 package domain
 
-import "math"
+import (
+	"math"
+
+	"github.com/werener/fractal-flame/pkg/random"
+)
 
 type TransformationType string
 type Transformation func(Point) Point
@@ -24,11 +28,33 @@ var AvailableTransformations = map[TransformationType]Transformation{
 	Heart:      heart,
 	Disk:       disk,
 	Cosine:     cosine,
-	Sinusoidal: sinusoidal}
+	Sinusoidal: sinusoidal,
+}
 
 func GetTransformation(tt TransformationType) (Transformation, bool) {
 	f, ok := AvailableTransformations[tt]
 	return f, ok
+}
+
+func GetRandomTransformation(rnd random.Random, functions []Function) Transformation {
+	cutoff := rnd.Float64() * calculateTotalWeight(functions)
+	var cumulativeWeight float64
+	for _, function := range functions {
+		cumulativeWeight += function.Weight
+		if cumulativeWeight >= cutoff {
+			return function.Transformation
+		}
+	}
+
+	return nil
+}
+
+func calculateTotalWeight(functions []Function) float64 {
+	var totalWeight float64
+	for _, function := range functions {
+		totalWeight += function.Weight
+	}
+	return totalWeight
 }
 
 func swirl(p Point) Point {
