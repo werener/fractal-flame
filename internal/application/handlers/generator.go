@@ -20,5 +20,8 @@ func (FractalGenerator) Generate(cfg *domain.Configuration, rnd random.RandomGen
 
 	img := domain.NewFractalImage(cfg.Resolution)
 	img.Generate(rect, cfg, randomizer)
+	if cfg.UseGammaCorrection {
+		img.GammaCorrect(cfg.Gamma)
+	}
 	return img
 }

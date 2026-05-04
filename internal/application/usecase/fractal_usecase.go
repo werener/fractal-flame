@@ -30,9 +30,6 @@ func NewFractalService(sav Saver, gen Generator, rnd random.RandomGenerator) *Fr
 
 func (fs *FractalService) Generate(cfg *domain.Configuration) {
 	fs.image = fs.generator.Generate(cfg, fs.randomizer)
-	if cfg.UseGammaCorrection {
-		fs.image.GammaCorrect(cfg.Gamma)
-	}
 }
 
 func (fs FractalService) Save(path string) error {
