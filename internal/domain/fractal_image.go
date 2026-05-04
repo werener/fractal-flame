@@ -1,6 +1,10 @@
 package domain
 
-import "github.com/werener/fractal-flame/pkg/random"
+import (
+	"math"
+
+	"github.com/werener/fractal-flame/pkg/random"
+)
 
 const Shift = 20 // Amount of iterations to determine the startng point
 
@@ -65,4 +69,32 @@ func (fi *FractalImage) Generate(
 			}
 		}
 	}
+}
+
+func (fi *FractalImage) GammaCorrect(gamma float64) {
+	max := 0.0
+	for x := range fi.Width {
+		for y := range fi.Height {
+			pixel, _ := fi.GetPixel(x, y)
+			if pixel.HitCount > 0 {
+				pixel.Normal = math.Log10(float64(pixel.HitCount))
+			}
+			if pixel.Normal > max {
+				max = pixel.Normal
+			}
+		}
+	}
+
+	for x := range fi.Width {
+		for y := range fi.Height {
+			pixel, _ := fi.GetPixel(x, y)
+			pixel.Normal /= max
+			scale := math.Pow(pixel.Normal, 1.0/gamma)
+
+			pixel.Color.R = uint32(float64(pixel.Color.R) * scale)
+			pixel.Color.G = uint32(float64(pixel.Color.G) * scale)
+			pixel.Color.B = uint32(float64(pixel.Color.B) * scale)
+		}
+	}
+
 }

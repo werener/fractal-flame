@@ -1,14 +1,16 @@
 package domain
 
 type Configuration struct {
-	Resolution      Resolution
-	Seed            int64
-	IterationCount  int
-	PointIterations int
-	OutputPath      string
-	Threads         int
-	AffineParams    []AffineParams
-	Functions       []Function
+	Resolution         Resolution
+	Seed               int64
+	IterationCount     int
+	PointIterations    int
+	OutputPath         string
+	Threads            int
+	AffineParams       []AffineParams
+	Functions          []Function
+	UseGammaCorrection bool
+	Gamma              float64
 }
 
 type Resolution struct {

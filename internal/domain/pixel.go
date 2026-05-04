@@ -3,6 +3,7 @@ package domain
 type Pixel struct {
 	Color    Color
 	HitCount uint32
+	Normal   float64
 }
 
 // ColorPixel mixes the pixel's color with the provided color.
