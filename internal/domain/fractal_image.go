@@ -85,6 +85,10 @@ func (fi *FractalImage) GammaCorrect(gamma float64) {
 		}
 	}
 
+	if max == 0 {
+		return
+	}
+
 	for x := range fi.Width {
 		for y := range fi.Height {
 			pixel, _ := fi.GetPixel(x, y)
