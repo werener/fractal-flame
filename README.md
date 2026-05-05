@@ -73,6 +73,18 @@
   
     *Weight of the functions (its relative probability to be used)*
 ------------------------------------
+- `--gamma-correction` - **boolean**
+
+  *Enables gamma correction*
+
+  **Default value** `false`
+------------------------------------
+- `-g` / `--gamma` - **double**
+
+  *Gamma value for brightness correction of final image*
+
+  **Default value** `1.0`
+------------------------------------
 - `--config` - **string**
 
   *Path to the file, containing configuration*

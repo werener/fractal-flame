@@ -45,7 +45,7 @@ var (
 		0.2, -0.35, 0.15, .25, -0.7, 0.8,
 	}
 	FunctionStringsDefault []string = []string{"swirl:1.0", "heart:1.0"}
-	GammaValueDefault      float64  = 2.2
+	GammaValueDefault      float64  = 1
 	SymmetryLevelDefault   int      = 1
 	PointIterationsDefault int      = 70
 )

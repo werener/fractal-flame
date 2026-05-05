@@ -98,12 +98,12 @@ func (a App) Run(ctx context.Context, args []string) error {
 				Validator: validateConfig,
 			},
 			&cli.BoolFlag{
-				Name:    "gamma-correction",
-				Aliases: []string{"g"},
-				Usage:   "Enables gamma correction",
+				Name:  "gamma-correction",
+				Usage: "Enables gamma correction",
 			},
 			&cli.Float64Flag{
 				Name:      "gamma",
+				Aliases:   []string{"g"},
 				Value:     domain.GammaValueDefault,
 				Usage:     "Gamma value for brightness correction of final image",
 				Validator: validateGamma,
