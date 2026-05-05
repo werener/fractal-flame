@@ -11,6 +11,7 @@ type Configuration struct {
 	Functions          []Function
 	UseGammaCorrection bool
 	Gamma              float64
+	SymmetryLevel      int
 }
 
 type Resolution struct {
