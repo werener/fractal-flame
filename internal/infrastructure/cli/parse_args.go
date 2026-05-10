@@ -11,13 +11,10 @@ import (
 
 // createConfig creates a configuration for the application.
 // TODO: add config parsing
-func createConfig(c *cli.Command) (*domain.Configuration, error) {
-	funcs, err := parseFunctions(c.StringSlice("functions"))
-	if err != nil {
-		return nil, err
-	}
+func createConfig(c *cli.Command) (args *domain.Configuration, err error) {
+	funcs, _ := parseFunctions(c.StringSlice("functions"))
 
-	args := &domain.Configuration{
+	args = &domain.Configuration{
 		Resolution: domain.Resolution{
 			Width:  c.Int("width"),
 			Height: c.Int("height"),
@@ -31,8 +28,15 @@ func createConfig(c *cli.Command) (*domain.Configuration, error) {
 		Functions:          funcs,
 		UseGammaCorrection: c.IsSet("gamma") || c.Bool("gamma-correction"),
 		Gamma:              c.Float64("gamma"),
+		SymmetryLevel:      c.Int("symmetry-level"),
 	}
 
+	if c.IsSet("config") {
+		err = readFromJson(c.String("config"), c, args)
+		if err != nil {
+			return nil, fmt.Errorf("cannot parse config (%w)", err)
+		}
+	}
 	return args, nil
 }
 
@@ -73,11 +77,13 @@ func parseFunctions(funcStrs []string) ([]domain.Function, error) {
 func parseFunction(funcStr string) (domain.Function, error) {
 	transformationStr, weightStr, ok := strings.Cut(funcStr, ":")
 	if !ok {
-		return domain.Function{}, fmt.Errorf("%s: wrong function format - no ':'", funcStr)
+		return domain.Function{}, fmt.Errorf("%s: wrong function format (no ':')", funcStr)
 	}
-	transformation, ok := domain.GetTransformation(domain.TransformationType(transformationStr))
+	name := domain.TransformationType(transformationStr)
+
+	transformation, ok := domain.GetTransformation(name)
 	if !ok {
-		return domain.Function{}, fmt.Errorf("%s: transformation function isn't supported", transformationStr)
+		return domain.Function{}, fmt.Errorf("%s: transformation function isn't supported", name)
 	}
 
 	weight, err := strconv.ParseFloat(weightStr, 64)
@@ -88,5 +94,5 @@ func parseFunction(funcStr string) (domain.Function, error) {
 		return domain.Function{}, fmt.Errorf("%s: weight must be positive number", weightStr)
 	}
 
-	return domain.Function{Transformation: transformation, Weight: weight}, nil
+	return domain.Function{Name: name, Transformation: transformation, Weight: weight}, nil
 }
