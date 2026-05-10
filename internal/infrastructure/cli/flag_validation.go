@@ -15,6 +15,7 @@ var (
 	errWrongGamma         error = errors.New("gamma cannot be zero")
 	errWrongSymmetryLevel error = errors.New("symmetry level has to be higher than zero")
 	errWrongOutput        error = errors.New("output path has to be a writable file with .png extension")
+	errWrongConfig        error = errors.New("config path has to be a readable file with .json extension")
 )
 
 func validateDimension(d int) error {
@@ -41,14 +42,14 @@ func validatePointIterations(i int) error {
 func validateOutput(outPath string) error {
 	ext := filepath.Ext(outPath)
 	if ext != ".png" {
-		return fmt.Errorf("%w: extension isn't supported: %s", errWrongOutput, ext)
+		return fmt.Errorf("%w: extension isn't supported (%s)", errWrongOutput, ext)
 	}
 
 	dir := filepath.Dir(outPath)
 	tmpFile, err := os.CreateTemp(dir, ".tmp")
 
 	if err != nil {
-		return fmt.Errorf("%w: cannot write file to directory %s: %w", errWrongOutput, dir, err)
+		return fmt.Errorf("%w: cannot write file to directory %s (%w)", errWrongOutput, dir, err)
 	}
 	err = tmpFile.Close()
 	if err != nil {
@@ -71,7 +72,7 @@ func validateThreads(t int) error {
 
 func validateAffineParams(ap []float64) error {
 	if len(ap)%6 != 0 {
-		return fmt.Errorf("%w: %d", errAffineParams, len(ap))
+		return fmt.Errorf("%w (%d)", errAffineParams, len(ap))
 	}
 	return nil
 }
@@ -82,7 +83,17 @@ func validateFunctions(funcStrs []string) error {
 }
 
 // TODO
-func validateConfig(_ string) error {
+func validateConfig(cfgPath string) error {
+	ext := filepath.Ext(cfgPath)
+
+	if ext != ".json" {
+		return fmt.Errorf("%w: extension isn't supported (%s)", errWrongConfig, ext)
+	}
+	_, err := os.ReadFile(cfgPath)
+	if err != nil {
+		return fmt.Errorf("%w: cannot read config file (%w)", errWrongConfig, err)
+	}
+
 	return nil
 }
 

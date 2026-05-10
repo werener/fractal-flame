@@ -1,36 +1,37 @@
 package domain
 
 type Configuration struct {
-	Resolution         Resolution
-	Seed               int64
-	IterationCount     int
-	PointIterations    int
-	OutputPath         string
-	Threads            int
-	AffineParams       []AffineParams
-	Functions          []Function
-	UseGammaCorrection bool
-	Gamma              float64
-	SymmetryLevel      int
+	Resolution         Resolution     `json:"resolution"`
+	Seed               int64          `json:"seed"`
+	IterationCount     int            `json:"iteration_count"`
+	PointIterations    int            `json:"point_iterations"`
+	OutputPath         string         `json:"output_path"`
+	Threads            int            `json:"threads"`
+	AffineParams       []AffineParams `json:"affine_params"`
+	Functions          []Function     `json:"functions"`
+	UseGammaCorrection bool           `json:"gamma_correction"`
+	Gamma              float64        `json:"gamma"`
+	SymmetryLevel      int            `json:"symmetry_level"`
 }
 
 type Resolution struct {
-	Width  int
-	Height int
+	Width  int `json:"width"`
+	Height int `json:"height"`
 }
 
 type AffineParams struct {
-	A float64
-	B float64
-	C float64
-	D float64
-	E float64
-	F float64
+	A float64 `json:"a"`
+	B float64 `json:"b"`
+	C float64 `json:"c"`
+	D float64 `json:"d"`
+	E float64 `json:"e"`
+	F float64 `json:"f"`
 }
 
 type Function struct {
+	Name           TransformationType `json:"name"`
+	Weight         float64            `json:"weight"`
 	Transformation Transformation
-	Weight         float64
 }
 
 var (
