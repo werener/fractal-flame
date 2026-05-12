@@ -39,7 +39,6 @@ func (fi *FractalImage) contains(x, y int) bool {
 }
 
 // Generate creates the fractal image within the specified rectangle.
-// TODO: make it non-reliant on configuraion.
 func (fi *FractalImage) Generate(
 	rect Rectangle,
 	cfg *Configuration,
@@ -47,6 +46,7 @@ func (fi *FractalImage) Generate(
 ) {
 	affineAmount := len(cfg.AffineParams)
 	colors := RandomColors(affineAmount, rnd)
+	symmetryRotationAngle := (2 * math.Pi) / float64(cfg.SymmetryLevel)
 
 	for range cfg.IterationCount {
 		point := rect.RandomPoint(rnd)
@@ -61,9 +61,13 @@ func (fi *FractalImage) Generate(
 			point = transformation(point)
 
 			if i >= Shift {
-				if rect.Contains(point) {
-					if pixel, ok := point.project(rect, fi); ok {
-						pixel.ColorPixel(color)
+				for range cfg.SymmetryLevel {
+					point.rotate(symmetryRotationAngle)
+
+					if rect.Contains(point) {
+						if pixel, ok := point.project(rect, fi); ok {
+							pixel.ColorPixel(color)
+						}
 					}
 				}
 			}
