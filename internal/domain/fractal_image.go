@@ -75,6 +75,12 @@ func (fi *FractalImage) Generate(
 	}
 }
 
+// GammaCorrect applies gamma correction to the provided
+// image, using the specified gamma parameter.
+//
+// gamma < 1 results in a dimmer image
+//
+// gamma > 1 results in a brighter image
 func (fi *FractalImage) GammaCorrect(gamma float64) {
 	max := 0.0
 	for x := range fi.Width {

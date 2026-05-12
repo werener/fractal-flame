@@ -31,6 +31,8 @@ func readFromJson(configPath string, command *cli.Command, cfg *domain.Configura
 		}
 		configJson.Functions[i].Transformation = transformation
 	}
+
+	// translation from json schema to configuration struct
 	configFile := []struct {
 		key       string
 		value     interface{}
