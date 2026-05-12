@@ -7,7 +7,7 @@ import (
 )
 
 type TransformationType string
-type Transformation func(Point) Point
+type Transformation func(*Point)
 
 const (
 	Swirl      TransformationType = "swirl"
@@ -57,77 +57,70 @@ func calculateTotalWeight(functions []Function) float64 {
 	return totalWeight
 }
 
-func swirl(p Point) Point {
+func swirl(p *Point) {
 	x, y := p.X, p.Y
 
 	sqd := x*x + y*y
 	sin := math.Sin(sqd)
 	cos := math.Cos(sqd)
 
-	return NewPoint(x*cos-y*sin, x*sin+y*cos)
+	p.X = x*cos - y*sin
+	p.Y = x*sin + y*cos
 }
 
-func horseshoe(p Point) Point {
+func horseshoe(p *Point) {
 	x, y := p.X, p.Y
 
 	r := math.Hypot(x, y)
 	if r == 0 {
-		return NewPoint(0, 0)
+		return
 	}
-	return NewPoint((x-y)*(x+y)/r, 2*x*y/r)
+
+	p.X = (x - y) * (x + y) / r
+	p.Y = 2 * x * y / r
 }
 
-func spherical(p Point) Point {
-	x, y := p.X, p.Y
-
-	sqd := x*x + y*y
+func spherical(p *Point) {
+	sqd := p.X*p.X + p.Y*p.Y
 	if sqd == 0 {
-		return NewPoint(0, 0)
+		return
 	}
-	return NewPoint(x/sqd, y/sqd)
+
+	p.X = p.X / sqd
+	p.Y = p.Y / sqd
 }
 
-func polar(p Point) Point {
-	x, y := p.X, p.Y
+func polar(p *Point) {
+	r := math.Hypot(p.X, p.Y)
 
-	newX := math.Atan2(y, x) / math.Pi
-	newY := math.Hypot(x, y) - 1
-
-	return NewPoint(newX, newY)
+	p.X = math.Atan2(p.Y, p.X) / math.Pi
+	p.Y = r - 1
 }
 
-func heart(p Point) Point {
-	x, y := p.X, p.Y
+func heart(p *Point) {
+	r := math.Hypot(p.X, p.Y)
+	theta := math.Atan2(p.Y, p.X)
 
-	r := math.Hypot(x, y)
-	theta := math.Atan2(y, x)
-	newX := r * math.Sin(r*theta)
-	newY := -r * math.Cos(r*theta)
-
-	return NewPoint(newX, newY)
+	p.X = r * math.Sin(r*theta)
+	p.Y = -r * math.Cos(r*theta)
 }
 
-func disk(p Point) Point {
-	x, y := p.X, p.Y
+func disk(p *Point) {
+	piR := math.Pi * math.Hypot(p.X, p.Y)
+	atan := 1 / math.Pi * math.Atan2(p.Y, p.X)
 
-	piR := math.Pi * math.Hypot(x, y)
-	atan := 1 / math.Pi * math.Atan2(y, x)
-
-	return NewPoint(atan*math.Sin(piR), atan*math.Cos(piR))
+	p.X = atan * math.Sin(piR)
+	p.Y = atan * math.Cos(piR)
 }
 
-func cosine(p Point) Point {
-	x, y := p.X, p.Y
+func cosine(p *Point) {
+	piX := math.Pi * p.X
 
-	phi := math.Pi * x
-	newX := math.Cos(phi) * math.Cosh(y)
-	newY := -math.Sin(phi) * math.Sinh(y)
-
-	return NewPoint(newX, newY)
+	p.X = math.Cos(piX) * math.Cosh(p.Y)
+	p.Y = -math.Sin(piX) * math.Sinh(p.Y)
 }
 
-func sinusoidal(p Point) Point {
-	x, y := p.X, p.Y
-
-	return NewPoint(math.Sin(x), math.Sin(y))
+func sinusoidal(p *Point) {
+	p.X = math.Sin(p.X)
+	p.Y = math.Sin(p.Y)
 }

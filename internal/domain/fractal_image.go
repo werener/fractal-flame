@@ -58,7 +58,7 @@ func (fi *FractalImage) Generate(
 			color := colors[affineGroup]
 
 			transformation := GetRandomTransformation(rnd, cfg.Functions)
-			point = transformation(point)
+			transformation(&point)
 
 			if i >= Shift {
 				for range cfg.SymmetryLevel {

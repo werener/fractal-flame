@@ -20,7 +20,7 @@ func (p *Point) affineTransform(ap AffineParams) {
 }
 
 // project maps the point to a pixel in the fractal image.
-func (p Point) project(rect Rectangle, fi *FractalImage) (*Pixel, bool) {
+func (p *Point) project(rect Rectangle, fi *FractalImage) (*Pixel, bool) {
 	x := int((p.X - rect.MinPoint.X) / rect.Width * float64(fi.Width))
 	y := int((p.Y - rect.MinPoint.Y) / rect.Height * float64(fi.Height))
 
