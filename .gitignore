@@ -27,7 +27,7 @@ go.work.sum
 # env file
 .env
 
-config.json
+*.json
 *.png
 # Editor/IDE
 # .idea/
