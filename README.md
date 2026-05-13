@@ -52,12 +52,12 @@
 		-0.3, -0.5, -0.2, 0.5, 0.7, 0.2,
 		0.2, -0.35, 0.15, .25, -0.7, 0.8```
 
-  - `a` - **double:** *масштаб/вращение X*
-  - `b` - **double:** *сдвиг-смешивание X от Y*
-  - `c` - **double:** *сдвиг по X*
-  - `d` - **double:** *смешивание Y от X*
-  - `e` - **double:** *масштаб/вращение Y*
-  - `f` - **double:** *сдвиг по Y*
+  - `a` - **double:** *scale of X depending on X*
+  - `b` - **double:** *shear of X depending on Y*
+  - `c` - **double:** *shear of X (absolute)*
+  - `d` - **double:** *shear of Y depending on X*
+  - `e` - **double:** *scale of Y depending on Y*
+  - `f` - **double:** *shear of Y (absolute)*
 ------------------------------------
 - `-f` / `--functions` - **template string (`<function_N>:<function_weight>`)**
 
@@ -105,9 +105,10 @@ Input parameters can be provided in a `.json` file:
     "width": 1920, 
     "height": 1080
   },
-  "iteration_count": 2500,
+  "iteration_count": 500000,
+  "point_iterations": 100,
   "output_path": "result.png",
-  "threads": 4,
+  "threads": 1,
   "seed": 5,
   "functions": [
     {
@@ -119,21 +120,20 @@ Input parameters can be provided in a `.json` file:
       "weight": 0.7
     }
   ],
-  "affine_params": {
+  "affine_params": [{
     "a": 1.0,
     "b": 1.0,
     "c": 1.0,
     "d": 1.0,
     "e": 1.0,
     "f": 1.0
-  }
+  }]
 }
 ```
 **Parameter priority:**
 * Console args
 * JSON-config
 * Default values
-
 
 
 ## Supported non-linear transformations
@@ -157,13 +157,3 @@ $$
 & F(x, y) = (\sin{x} ,\,  \sin{y})  & \it{Sinusoidal} \\
 \end{aligned}
 $$
-
-
-## Доп задания
-
-1. 5 и более трансформаций;
-2. поддержка симметрии в генерации пламени (описано в [статье](https://flam3.com/flame_draves.pdf)):
-   * Добавлено поле `symmetry_level` в JSON-конфиг, добавлен параметр `-s`/`--symmetry-level` для CLI:
-   * Целое число (N >= 1), которое задает количество поворотов вокруг центра;
-   * Каждая точка дублируется N раз с поворотом на 360/N градусов;
-   * При наличии параметра в конфигурации, соответствующая логика должна применяться на процесс рендера;
